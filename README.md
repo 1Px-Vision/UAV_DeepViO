@@ -64,9 +64,7 @@ The IMU measurements are modeled as:
 ```math
 \tilde{\boldsymbol{\omega}}_k =
 \boldsymbol{\omega}_k + \mathbf{b}_{g,k} + \mathbf{n}_{g,k}
-\]
 
-\[
 \tilde{\mathbf{a}}_k =
 \mathbf{R}_k^\top
 (
