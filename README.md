@@ -4,10 +4,9 @@ This repository implements a **Deep Visual–Inertial Odometry (DeepVIO)** model
 
 The objective is to estimate the relative 6-DoF motion of a UAV:
 
-\[
 \hat{\mathbf{y}}_k =
 [\Delta x_k,\Delta y_k,\Delta z_k,\Delta \phi_k,\Delta \theta_k,\Delta \psi_k]
-\]
+
 
 where translation and rotation increments are predicted from image pairs and synchronized IMU windows.
 
