@@ -61,7 +61,7 @@ where:
 
 The IMU measurements are modeled as:
 
-\[
+```math
 \tilde{\boldsymbol{\omega}}_k =
 \boldsymbol{\omega}_k + \mathbf{b}_{g,k} + \mathbf{n}_{g,k}
 \]
@@ -76,13 +76,13 @@ The IMU measurements are modeled as:
 \mathbf{b}_{a,k}
 +
 \mathbf{n}_{a,k}
-\]
+```
 
 where \(\tilde{\boldsymbol{\omega}}_k\) and \(\tilde{\mathbf{a}}_k\) are gyroscope and accelerometer measurements, and \(\mathbf{n}_{g,k}\), \(\mathbf{n}_{a,k}\) are sensor noise terms.
 
 Classical inertial propagation can be written as:
 
-\[
+```math
 \mathbf{p}_{k+1}
 =
 \mathbf{p}_k
@@ -99,7 +99,7 @@ Classical inertial propagation can be written as:
 \mathbf{g}
 \right)
 \Delta t^2
-\]
+```
 
 \[
 \mathbf{v}_{k+1}
