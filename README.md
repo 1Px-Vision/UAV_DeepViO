@@ -40,7 +40,7 @@ This makes the method suitable for **GPS-denied autonomous UAV navigation**.
 
 At time step \(k\), the UAV state can be represented as:
 
-\[
+```math
 \mathbf{x}_k =
 [
 \mathbf{p}_k,
@@ -49,7 +49,7 @@ At time step \(k\), the UAV state can be represented as:
 \mathbf{b}_{a,k},
 \mathbf{b}_{g,k}
 ]
-\]
+```
 
 where:
 
