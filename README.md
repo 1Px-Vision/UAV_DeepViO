@@ -460,7 +460,7 @@ A Python-based **GPS-denied monocular visual odometry navigation system** that c
 
 The following video shows the output of the **Particle Filter Monocular VO + CNN Deep Motion Prior** system, including the marked navigation video, estimated trajectory, and visual odometry mapping.
 
-[▶ Watch the demo video](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/converted_V2.mp4)
+[](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/converted_V2.mp4)
 
 [⬇ Download raw MP4](https://github.com/1Px-Vision/UAV_DeepViO/raw/main/converted_V2.mp4)
 
