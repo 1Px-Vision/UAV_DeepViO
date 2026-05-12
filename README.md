@@ -562,6 +562,16 @@ python mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py \
 </p>
 
 
+![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/GPS_denied_forest_2.jpg)
+
+<p align="center">
+  <b>VIO + Geo-Location GPS-Denied Forest Navigation</b><br>
+  Click the image to watch the Kapwing demo video.
+</p>
+
+<p align="center">
+  <a href="https://www.kapwing.com/e/6a033f1f917c991a7529dd9d">▶ Watch on Kapwing</a>
+</p>
 
 ## Method Summary
 
