@@ -410,6 +410,8 @@ This mechanism allows the network to rely more heavily on IMU information when v
 
 The DeepVIO model can be used as the localization block of a GPS-denied UAV navigation pipeline.
 
+![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/PF_Deep_Prior.jpg)
+
 At each time step:
 
 1. The UAV captures a monocular image.
