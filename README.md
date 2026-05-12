@@ -553,6 +553,10 @@ python mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py \
 ---
 ### Forest navigation
 
+![]()
+
+
+
 ## Method Summary
 
 The proposed DeepVIO model estimates UAV motion by learning a direct mapping from monocular image pairs and IMU windows to relative 6-DoF pose increments. The visual encoder captures frame-to-frame motion cues, while the inertial encoder extracts short-term dynamics from accelerometer and gyroscope data. A fusion module combines both modalities, and an LSTM models temporal dependencies across the flight sequence.
