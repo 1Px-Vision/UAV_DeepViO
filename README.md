@@ -450,188 +450,79 @@ This enables autonomous UAV navigation without GPS by using only onboard visual 
 
 ---
 
-## Model Input and Output
+## Particle Filter Monocular VO + CNN Deep Motion Prior
 
-### Input
+A Python-based **GPS-denied monocular visual odometry navigation system** that combines classical feature-based VO, a **Particle Filter pose estimator**, and a lightweight **CNN Deep Motion Prior** for trajectory smoothing and motion regularization.
 
-```python
-img.shape = (batch_size, num_images, 3, height, width)
-imu.shape = (batch_size, num_imu_samples, 6)
-```
+The system reads video frames from a monocular camera sequence, estimates frame-to-frame motion, filters noisy pose updates using a particle filter, learns a short-horizon motion prior with a CNN, and generates trajectory plots, evaluation metrics, and a marked navigation video.
 
-The six IMU channels are:
+The main idea is to combine:
+
+1. **Feature-based monocular VO**
+   - ORB/KLT feature tracking
+   - Essential matrix estimation
+   - Relative pose recovery
+   - Incremental trajectory reconstruction
+
+2. **Particle Filter localization**
+   - Maintains multiple pose hypotheses
+   - Reduces noisy VO updates
+   - Improves robustness under drift, feature loss, and scale uncertainty
+
+3. **CNN Deep Motion Prior**
+   - Learns motion consistency from recent visual features
+   - Regularizes translation and heading updates
+   - Improves the smoothness of the estimated trajectory
+
+4. **Evaluation and visualization**
+   - RMSE and error calculation when ground truth is available
+   - Aligned trajectory plots
+   - Marked output video with navigation map and motion indicators
+
+---
+
+## Main Features
+
+- Monocular visual odometry from video input
+- Particle Filter-based trajectory refinement
+- CNN Deep Motion Prior for learned motion smoothing
+- Optional GPU acceleration with PyTorch
+- Automatic fallback if PyTorch is unavailable
+- KITTI-style calibration file support
+- Ground truth trajectory evaluation
+- RMSE, Absolute Trajectory Error, and frame-wise error calculation
+- Output video with marked VO navigation overlay
+- CSV, TUM, and KITTI trajectory export
+- 2D trajectory visualization
+- Headless-compatible execution for Linux, servers, and Google Colab
+
+---
+
+## Project Structure
 
 ```text
-ax, ay, az, gx, gy, gz
-```
+Particle-Filter-Monocular-VO-CNN-Prior/
+│
+├── particle_filter_mono_vo_cnn_prior.py
+├── README.md
+│
+├── kitti06/
+│   ├── video.mp4
+│   ├── 06.txt
+│   ├── groundtruth.txt
+│   └── times.txt
+│
+└── vo_output_particle_cnn/
+    ├── trajectory.csv
+    ├── trajectory_tum.txt
+    ├── trajectory_kitti.txt
+    ├── trajectory_xz.png
+    ├── trajectory_aligned_xz.png
+    ├── marked_vo_navigation_video.mp4
+    ├── evaluation.txt
+    └── cnn_motion_prior.pt
 
-### Output
-
-```python
-poses.shape = (batch_size, num_images - 1, 6)
-```
-
-Each output pose is:
-
-```text
-[dx, dy, dz, droll, dpitch, dyaw]
-```
-
----
-
-## Google Colab Trajectory Animation
-
-The following code creates a simple animation of the estimated UAV trajectory from the DeepVIO relative pose output.
-
-```python
-import numpy as np
-import matplotlib.pyplot as plt
-from matplotlib.animation import FuncAnimation
-from IPython.display import HTML
-
-def integrate_relative_poses(relative_poses):
-    """
-    Integrates relative DeepVIO pose increments into a 2D trajectory.
-
-    relative_poses:
-        numpy array with shape (N, 6)
-        each row = [dx, dy, dz, droll, dpitch, dyaw]
-    """
-
-    x, y, z = 0.0, 0.0, 0.0
-    yaw = 0.0
-
-    trajectory = []
-
-    for pose in relative_poses:
-        dx, dy, dz, droll, dpitch, dyaw = pose
-
-        yaw += dyaw
-
-        global_dx = np.cos(yaw) * dx - np.sin(yaw) * dy
-        global_dy = np.sin(yaw) * dx + np.cos(yaw) * dy
-
-        x += global_dx
-        y += global_dy
-        z += dz
-
-        trajectory.append([x, y, z])
-
-    return np.array(trajectory)
-
-
-def animate_vio_trajectory(trajectory):
-    fig, ax = plt.subplots(figsize=(6, 6))
-
-    ax.set_title("Deep Visual-Inertial Odometry for GPS-Denied UAV Navigation")
-    ax.set_xlabel("X position [m]")
-    ax.set_ylabel("Y position [m]")
-    ax.grid(True)
-
-    margin = 1.0
-    ax.set_xlim(trajectory[:, 0].min() - margin, trajectory[:, 0].max() + margin)
-    ax.set_ylim(trajectory[:, 1].min() - margin, trajectory[:, 1].max() + margin)
-
-    path_line, = ax.plot([], [], linewidth=2, label="Estimated VIO trajectory")
-    drone_point, = ax.plot([], [], marker="o", markersize=8, label="UAV")
-    ax.legend()
-
-    def init():
-        path_line.set_data([], [])
-        drone_point.set_data([], [])
-        return path_line, drone_point
-
-    def update(frame):
-        path_line.set_data(
-            trajectory[:frame + 1, 0],
-            trajectory[:frame + 1, 1]
-        )
-        drone_point.set_data(
-            [trajectory[frame, 0]],
-            [trajectory[frame, 1]]
-        )
-        return path_line, drone_point
-
-    animation = FuncAnimation(
-        fig,
-        update,
-        frames=len(trajectory),
-        init_func=init,
-        interval=120,
-        blit=True
-    )
-
-    plt.close(fig)
-    return animation
-
-
-# Example:
-# poses is the model output with shape (batch_size, sequence_length, 6)
-
-relative_poses = poses[0].detach().cpu().numpy()
-trajectory = integrate_relative_poses(relative_poses)
-
-animation = animate_vio_trajectory(trajectory)
-
-HTML(animation.to_jshtml())
-```
-
----
-
-## Save Animation as GIF
-
-```python
-animation.save("deep_vio_gps_denied.gif", writer="pillow", fps=10)
-```
-
-Then include the GIF in the README:
-
-```markdown
-## GPS-Denied VIO Animation
-
-![DeepVIO GPS-denied trajectory](assets/deep_vio_gps_denied.gif)
-```
-
----
-
-## Save Animation as MP4
-
-```python
-!apt-get install -y ffmpeg
-animation.save("deep_vio_gps_denied.mp4", writer="ffmpeg", fps=10)
-```
-
-Then include the MP4 as a clickable link:
-
-```markdown
-## GPS-Denied VIO Video
-
-[Watch the DeepVIO GPS-denied trajectory animation](assets/deep_vio_gps_denied.mp4)
-```
-
-For better GitHub compatibility, use a GIF preview linked to the MP4:
-
-```markdown
-[![DeepVIO GPS-denied trajectory](assets/deep_vio_gps_denied.gif)](assets/deep_vio_gps_denied.mp4)
-```
-
----
-
-## Application Scenarios
-
-The proposed DeepVIO framework is useful for UAV navigation in:
-
-- indoor environments,
-- tunnels and mines,
-- urban canyons,
-- disaster-response scenarios,
-- forest inspection,
-- GPS-jammed environments,
-- search-and-rescue missions,
-- low-altitude autonomous flight.
-
----
-
+    
 ## Method Summary
 
 The proposed DeepVIO model estimates UAV motion by learning a direct mapping from monocular image pairs and IMU windows to relative 6-DoF pose increments. The visual encoder captures frame-to-frame motion cues, while the inertial encoder extracts short-term dynamics from accelerometer and gyroscope data. A fusion module combines both modalities, and an LSTM models temporal dependencies across the flight sequence.
@@ -642,4 +533,4 @@ A policy network improves robustness by suppressing unreliable visual features u
 
 ## Repository Description
 
-Deep Visual-Inertial Odometry model for GPS-denied UAV navigation using monocular image pairs, IMU windows, neural feature fusion, LSTM pose regression, policy-based visual selection, and Google Colab trajectory animation.
+Deep Visual-Inertial Odometry model for GPS-denied UAV navigation using monocular image pairs, IMU windows, neural feature fusion, deep-prior pose regression, policy-based visual selection, and Google Colab trajectory animation.
