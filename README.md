@@ -556,7 +556,7 @@ python mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py \
 
 ![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/GPS_denied_urban.jpg)
 
-▶️ [Watch the demo video on Kapwing](https://www.kapwing.com/e/6a036976e119c44b67451a90)
+▶️ [VIO+GPS-Denied](https://www.kapwing.com/e/6a036976e119c44b67451a90)
 
 ### Forest navigation
 
