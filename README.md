@@ -412,6 +412,8 @@ The DeepVIO model can be used as the localization block of a GPS-denied UAV navi
 
 ![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/PF_Deep_Prior.jpg)
 
+▶️ [Watch the demo video on Kapwing](https://www.kapwing.com/e/6a01e620522df7668c43a3ce)
+
 At each time step:
 
 1. The UAV captures a monocular image.
