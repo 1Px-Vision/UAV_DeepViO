@@ -456,6 +456,25 @@ This enables autonomous UAV navigation without GPS by using only onboard visual 
 
 A Python-based **GPS-denied monocular visual odometry navigation system** that combines classical feature-based VO, a **Particle Filter pose estimator**, and a lightweight **CNN Deep Motion Prior** for trajectory smoothing and motion regularization.
 
+## Demo Video
+
+<p align="center">
+  <a href="https://github.com/1Px-Vision/UAV_DeepViO/blob/main/converted_V2.mp4">
+    <img src="docs/demo_preview.png" alt="Particle Filter Monocular VO + CNN Deep Motion Prior Demo" width="850">
+  </a>
+</p>
+
+<p align="center">
+  <b>Particle Filter Monocular VO + CNN Deep Motion Prior</b><br>
+  Click the image above to watch the demo video.
+</p>
+
+<p align="center">
+  <a href="https://github.com/1Px-Vision/UAV_DeepViO/raw/main/converted_V2.mp4">
+    ▶ Download / Watch Demo Video
+  </a>
+</p>
+
 The system reads video frames from a monocular camera sequence, estimates frame-to-frame motion, filters noisy pose updates using a particle filter, learns a short-horizon motion prior with a CNN, and generates trajectory plots, evaluation metrics, and a marked navigation video.
 
 The main idea is to combine:
