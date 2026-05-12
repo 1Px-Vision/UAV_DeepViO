@@ -513,7 +513,7 @@ The main idea is to combine:
 ```text
 Particle-Filter-Monocular-VO-CNN-Prior/
 │
-├── particle_filter_mono_vo_cnn_prior.py
+├── mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py
 ├── README.md
 │
 ├── kitti06/
@@ -531,8 +531,26 @@ Particle-Filter-Monocular-VO-CNN-Prior/
     ├── marked_vo_navigation_video.mp4
     ├── evaluation.txt
     └── cnn_motion_prior.pt
+```
 
-    
+```
+python mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py \
+    --data_dir kitti06 \
+    --outdir vo_output_improved_deep_prior \
+    --scale_mode auto \
+    --use_cnn_prior \
+    --prior_blend 0.25 \
+    --prior_train_steps 2 \
+    --prior_height 160 \
+    --prior_width 480 \
+    --motion_smooth 0.20 \
+    --particle_count 1200 \
+    --particle_process_noise 0.030 \
+    --particle_measurement_noise 0.25 \
+    --gpu
+```
+---
+ 
 ## Method Summary
 
 The proposed DeepVIO model estimates UAV motion by learning a direct mapping from monocular image pairs and IMU windows to relative 6-DoF pose increments. The visual encoder captures frame-to-frame motion cues, while the inertial encoder extracts short-term dynamics from accelerometer and gyroscope data. A fusion module combines both modalities, and an LSTM models temporal dependencies across the flight sequence.
