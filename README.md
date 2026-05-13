@@ -564,11 +564,7 @@ python mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py \
 
 ![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/GPS_denied_forest.jpg)
 
-<p align="center">
-  <a href="https://www.kapwing.com/e/6a0338771803f40fa7cb494a">
-    ▶ VIO + Geo-Location GPS-Denied Drone Navigation Demo
-  </a>
-</p>
+▶️ [Watch the GPS-denied drone navigation demo](https://www.kapwing.com/e/6a0338771803f40fa7cb494a)
 
 ![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/GPS_denied_forest_2.jpg)
 
