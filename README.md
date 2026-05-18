@@ -554,6 +554,16 @@ python mono_vo_cnn_deep_prior_particle_gpu_improved_prior.py \
 ```
 ---
 
+```
+python forest_gps_denied_vo_mapping.py     
+--video /home/cbeario/DeepPrior/Drone.mp4     
+--outdir forest_vo_map_output     
+--scale_mode unit     
+--default_scale 0.08     
+--save_video
+```
+
+
 ### Urban example navigation
 
 ![](https://github.com/1Px-Vision/UAV_DeepViO/blob/main/GPS_denied_urban.jpg)
